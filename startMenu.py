@@ -1,10 +1,12 @@
 import tkinter as tk
+import os
 from PIL import ImageTk, Image
 from tkinter import messagebox 
 
+
 HEIGHT = 540
 WIDTH = 960
-
+mapping = ""
 icondir = "./sprites/camico.ico"
 
 root = tk.Tk()
@@ -72,7 +74,7 @@ def openImage():
     button = tk.Button(frame, text="GO", bg='#14191E', fg='white')
     button.place(relx=0.555, rely=0.27, relwidth=0.062, relheight=0.062)
     
-    button = tk.Button(frame, text="GO", bg='#14191E', fg='white')
+    button = tk.Button(frame, text="GO", command=eventClick, bg='#14191E', fg='white')
     button.place(relx=0.555, rely=0.27, relwidth=0.062, relheight=0.062)
 
     closeButton(frame,top)
@@ -98,11 +100,10 @@ def openVideo():
     entry = tk.Entry(frame, bg='#252e38', fg='white', font=("segouil"))
     entry.place(relx=0.0525, rely=0.27, relwidth=0.5, relheight=0.06)
 
-    button = tk.Button(frame, text="GO", bg='#14191E', fg='white')
+    button = tk.Button(frame, text="GO", command=eventClick, bg='#14191E', fg='white')
     button.place(relx=0.555, rely=0.27, relwidth=0.062, relheight=0.062)
     
-    button = tk.Button(frame, text="GO", bg='#14191E', fg='white')
-    button.place(relx=0.555, rely=0.27, relwidth=0.062, relheight=0.062)
+    mapping = entry
 
     closeButton(frame,top)
 
@@ -127,15 +128,27 @@ def openCam():
     entry = tk.Entry(frame, bg='#252e38', fg='white', font=("segouil"))
     entry.place(relx=0.0525, rely=0.27, relwidth=0.5, relheight=0.06)
 
-    button = tk.Button(frame, text="GO", bg='#14191E', fg='white')
+    button = tk.Button(frame, text="GO", command=eventClick, bg='#14191E', fg='white')
     button.place(relx=0.555, rely=0.27, relwidth=0.062, relheight=0.062)
     
-    button = tk.Button(frame, text="GO", bg='#14191E', fg='white')
-    button.place(relx=0.555, rely=0.27, relwidth=0.062, relheight=0.062)
+    mapping = entry
+
 
     closeButton(frame,top)
 
     top.resizable(0, 0)
+    
+
+def eventClick():
+    param = mapping
+    os.chdir('D:/projectAI2/sdd')
+    runcmd(param)
+
+def runcmd(directory):
+	os.system("python sdd_main.py --input " + directory + "  --output outputtt.avi --birdview birdview.avi")
+
+
+
 
 about = tk.PhotoImage(file='./sprites/about.png')
 about = about.subsample(10,10)
@@ -172,7 +185,6 @@ button = tk.Button(frame, bg='#14191E', width=150, height=150, image=image, comm
 button.place(relx=0.411, rely=0.555)
 button = tk.Button(frame, bg='#14191E', width=150, height=150, image=video, command = openVideo)
 button.place(relx=0.567, rely=0.555)
-
 
 root.resizable(0, 0)
 
